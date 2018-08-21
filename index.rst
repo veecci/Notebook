@@ -16,7 +16,9 @@ Standard Templates Library
 .. toctree::
    :maxdepth: 2
 
-   number_theory.rst
-   data_structure.rst
+   basic.rst
+   maths.rst
    graph.rst
-   
+   data_structure.rst
+   string.rst
+   geometry.rst
