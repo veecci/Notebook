@@ -1,3 +1,3 @@
 # Notebook
 
-see https://vici-notebook.readthedocs.io
+https://vici-notebook.readthedocs.io
