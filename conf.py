@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'notebook'
+project = u'Notebook'
 copyright = u'2018, vici'
 author = u'vici'
 
