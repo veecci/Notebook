@@ -6,7 +6,7 @@
 
 Notebook
 =====================================
-Hello.
+.. image:: _static/logo.jpg
 
         
  
