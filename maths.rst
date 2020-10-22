@@ -360,6 +360,7 @@ FFT
 =================
 
 .. code-block:: cpp
+
   int const N = 100100;
   double const pi = atan2(0, -1);
   struct E {
@@ -402,5 +403,4 @@ FFT
       clr(a, 0); clr(b, 0); clr(re, 0);
     }
   } fft;
-
 
