@@ -353,3 +353,54 @@ Place n Balls into m Boxes
       }
     }
   }
+
+.. _fft:
+
+FFT
+=================
+
+.. code-block:: cpp
+  int const N = 100100;
+  double const pi = atan2(0, -1);
+  struct E {
+    double x, y;
+    E(double x = 0, double y = 0) : x(x), y(y) {}
+    E operator-(const E &b) const { return E(x - b.x, y - b.y); }
+    E operator+(const E &b) const { return E(x + b.x, y + b.y); }
+    E operator*(const E &b) const { return E(x * b.x - y * b.y, x * b.y + y * b.x); }
+  };
+
+  struct FFT {
+    int n, m, l, r[N*2]; ll s[N][2]; int re[N*2];
+    E a[N*2],b[N*2];
+    void fft(E *a, int sig) {
+      rep(i, n) if (i < r[i]) swap(a[i], a[r[i]]);
+      for (int i = 1; i < n; i <<= 1) {
+        E wn(cos(pi / i), sig * sin(pi / i));
+        for (int j = 0, p = i << 1; j < n; j += p) {
+          E w(1, 0);
+          for (int k = 0; k < i; ++k, w = w * wn) {
+            E x = a[j + k], y = w * a[j + k + i];
+            a[j + k] = x + y; a[j + k + i] = x - y;
+          }
+        }
+      }
+    }
+    int solve(int _n, int _m) {
+      n = _n - 1, m = _m - 1, l = 0;
+      rep(i, n + 1) a[i] = E(s[i][0], 0);
+      rep(i, m + 1) b[i] = E(s[i][1], 0);
+      m += n; for (n = 1; n <= m; n <<= 1) ++l;
+      rep(i, n) r[i] = (r[i >> 1] >> 1) | ((i & 1) << (l - 1));
+      fft(a, 1); fft(b, 1);
+      rep(i, n + 1) a[i] = a[i] * b[i];
+      fft(a, -1);
+      rep(i, m + 1) re[i] = (int)(a[i].x / n + 0.5);
+      return m + 1;
+    }
+    void init() {
+      clr(a, 0); clr(b, 0); clr(re, 0);
+    }
+  } fft;
+
+
