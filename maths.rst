@@ -294,6 +294,24 @@ Find Factors
     return cnt;
   }
 
+.. _comb_mod:
+
+Combination(mod)
+=================
+
+.. code-block:: cpp
+
+  ll fac[N], inv[N];
+  ll C(int n, int m) {
+    return fac[n] * inv[m] % mod * inv[n - m] % mod;
+  }
+  void Cinit() {
+    fac[0] = inv[0] = inv[1] = 1;
+    for (int i = 1; i < N; ++i) fac[i] = fac[i - 1] * i % mod;
+    for (int i = 2; i < N; ++i) inv[i] = inv[mod % i] * (mod - mod / i) % mod;
+    for (int i = 2; i < N; ++i) inv[i] = inv[i - 1] * inv[i] % mod;
+  }
+
 .. _place_n_balls_into_m_boxes:
 
 Place n Balls into m Boxes
@@ -373,7 +391,7 @@ FFT
 
   struct FFT {
     int n, m, l, r[N*2]; ll s[N][2]; int re[N*2];
-    E a[N*2],b[N*2];
+    E a[N*2], b[N*2];
     void fft(E *a, int sig) {
       rep(i, n) if (i < r[i]) swap(a[i], a[r[i]]);
       for (int i = 1; i < n; i <<= 1) {
