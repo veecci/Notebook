@@ -294,6 +294,18 @@ Find Factors
     return cnt;
   }
 
+.. _n/i enumerate
+
+n/i Enumerate
+=================
+
+.. code-block:: cpp
+
+  for (int i = 1, j; i <= n; i = j + 1) {
+    j = n / (n / i);
+    // n / i : [i, j]
+  }
+
 .. _comb_mod:
 
 Combination(mod)
