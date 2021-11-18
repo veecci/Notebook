@@ -294,7 +294,7 @@ Find Factors
     return cnt;
   }
 
-.. _n/i enumerate
+.. _n_i enumerate
 
 n/i Enumerate
 =================
