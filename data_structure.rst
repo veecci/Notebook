@@ -219,21 +219,21 @@ BinarySearch
 
 .. code-block:: cpp
 
-	// for a[]
-	upper_bound(a, a + n, x) - a - 1; // a[res] <= x
-	lower_bound(a, a + n, x) - a - 1; // a[res] < x
-	lower_bound(a, a + n, x) - a; // a[res] >= x
-	upper_bound(a, a + n, x) - a; // a[res] > x
+  // for a[]
+  upper_bound(a, a + n, x) - a - 1; // a[res] <= x
+  lower_bound(a, a + n, x) - a - 1; // a[res] < x
+  lower_bound(a, a + n, x) - a; // a[res] >= x
+  upper_bound(a, a + n, x) - a; // a[res] > x
 
-	// for vector
-	upper_bound(v.begin(), v.end(), x) - v.begin() - 1; // v[res] <= x
-	lower_bound(v.begin(), v.end(), x) - v.begin() - 1; // v[res] <= x
-	lower_bound(v.begin(), v.end(), x) - v.begin(); // v[res] <= x
-	upper_bound(v.begin(), v.end(), x) - v.begin(); // v[res] <= x
+  // for vector
+  upper_bound(v.begin(), v.end(), x) - v.begin() - 1; // v[res] <= x
+  lower_bound(v.begin(), v.end(), x) - v.begin() - 1; // v[res] <= x
+  lower_bound(v.begin(), v.end(), x) - v.begin(); // v[res] <= x
+  upper_bound(v.begin(), v.end(), x) - v.begin(); // v[res] <= x
 
-	// for set/multiset
-	*s.lower_bound(x); // res >= x
-	*s.upper_bound(x); // res > x
+  // for set/multiset
+  *s.lower_bound(x); // res >= x
+  *s.upper_bound(x); // res > x
 
 .. _discrete:
 
@@ -242,9 +242,9 @@ Discrete
 
 .. code-block:: cpp
 
-	vector<int> vt(a, a + n);
-	sort(vt.begin(), vt.end());
-	vt.erase(unique(vt.begin(), vt.end()), vt.end());
+  vector<int> vt(a, a + n);
+  sort(vt.begin(), vt.end());
+  vt.erase(unique(vt.begin(), vt.end()), vt.end());
 
 .. _lis:
 
@@ -253,16 +253,16 @@ LIS
 
 .. code-block:: cpp
 
-	int lis(int a[], int n) {
-		vector<int> dp;
-		int len = 0;
-		rep(i, n) {
-			int t = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
-			if (t >= dp.size()) dp.push_back(a[i]);
-			else dp[t] = a[i];
-		}
-		return (int)dp.size();
-	}
+  int lis(int a[], int n) {
+    vector<int> dp;
+    int len = 0;
+    rep(i, n) {
+      int t = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
+      if (t >= dp.size()) dp.push_back(a[i]);
+      else dp[t] = a[i];
+    }
+    return (int)dp.size();
+  }
 
 .. _matrix:
 
