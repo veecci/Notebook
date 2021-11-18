@@ -235,7 +235,7 @@ BinarySearch
 	*s.lower_bound(x); // res >= x
 	*s.upper_bound(x); // res > x
 
-.. _discrete
+.. _discrete:
 
 Discrete
 ============
