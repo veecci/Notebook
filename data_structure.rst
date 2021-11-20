@@ -255,7 +255,6 @@ LIS
 
   int lis(int a[], int n) {
     vector<int> dp;
-    int len = 0;
     rep(i, n) {
       int t = lower_bound(dp.begin(), dp.end(), a[i]) - dp.begin();
       if (t >= dp.size()) dp.push_back(a[i]);

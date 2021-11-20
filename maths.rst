@@ -294,6 +294,47 @@ Find Factors
     return cnt;
   }
 
+.. _basis:
+
+Basis
+=================
+
+.. code-block:: cpp
+
+  int const B = 63;
+  struct Basis {
+    ll d[B]; int cnt = 0; bool zero;
+    Basis() { rep(i, B) d[i] = 0; cnt = 0; zero = 0; }
+    void rebuild() { for (int i = B - 1; i >= 0; --i) { for (int j = i - 1; j >= 0; --j) { if (d[i] >> j & 1) d[i] ^= d[j]; } } }
+    bool ask(ll x) { for (int i = B - 1; i >= 0; --i) { if (x >> i & 1) x ^= d[i]; } return x == 0; }
+    ll mx() { ll r = 0; for (int i = B - 1; i >= 0; --i) { if ((r ^ d[i]) > r) r ^= d[i]; } return r; }
+    ll mi() { if (zero) return 0; rep(i, B) if (d[i]) { return d[i]; } return 0; }
+    void debug() { rep(i, B) printf("%d ", d[i]); puts(""); }
+    void add(ll x) {
+      bool ins = 0;
+      for (int i = B - 1; i >= 0; --i) { 
+        if (x >> i & 1) { 
+          if (d[i]) x ^= d[i]; 
+          else { 
+            d[i] = x; ins = 1; break; 
+          } 
+        } 
+      }
+      if (ins) ++cnt; else zero = 1;
+    }
+    ll kth(ll k) {
+      if (zero) --k;
+      if (k >= (1LL << cnt)) return -1;
+      rebuild();
+      ll r = 0; int top = 0; 
+      rep(i, B) if (d[i]) {
+        if (k >> top & 1) r ^= d[i];
+        ++top;
+      }
+      return r;
+    }
+  } ba;
+
 .. _n_i enumerate:
 
 n/i Enumerate
