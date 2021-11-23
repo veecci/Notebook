@@ -475,3 +475,56 @@ FFT
     }
   } fft;
 
+.. _fwt:
+
+FWT
+=================
+:math:`C_i = \sum_{j\oplus k=i}A_j\times B_k`
+
+.. code-block:: cpp
+
+  int const M = 17;
+  int const mod = 998244353;
+  int const inv2 = 499122177; // inv(2, 1, mod)
+  ll a[1<<M], b[1<<M], ta[1<<M], tb[1<<M];
+
+  void fwt_or(ll a[], ll n, int t) {
+    for (int k = 1; k < n; k <<= 1) {
+      for (int i = 0; i < n; i += (k << 1)) {
+        rep(j, k) {
+          a[i + j + k] = (a[i + j + k] + a[i + j] * t + mod) % mod;
+        }
+      }
+    }
+  }
+
+  void fwt_xor(ll a[], ll n, int t) {
+    for (int k = 1; k < n; k <<= 1) {
+      for (int i = 0; i < n; i += (k << 1)) {
+        rep(j, k) {
+          ll x = a[i + j], y = a[i + j + k];
+          a[i + j] = (x + y) * (t == 1 ? 1 : inv2) % mod;
+          a[i + j + k] = (x - y + mod) * (t == 1 ? 1 : inv2) % mod;
+        }
+      }
+    }
+  }
+
+  void fwt_and(ll a[], ll n, int t) {
+    for (int k = 1; k < n; k <<= 1) {
+      for (int i = 0; i < n; i += (k << 1)) {
+        rep(j, k) {
+          a[i + j] = (a[i + j] + a[i + j + k] * t + mod) % mod;
+        }
+      }
+    }
+  }
+
+  void solve(void (*fwt)(ll *a, ll n, int t), ll a[], ll b[], int n) {
+    rep(i, n) ta[i] = a[i];
+    rep(i, n) tb[i] = b[i];
+    fwt(ta, n, 1), fwt(tb, n, 1);
+    rep(i, n) ta[i] = (ta[i] * tb[i]) % mod;
+    fwt(ta, n, -1);
+  }
+
