@@ -335,6 +335,52 @@ Basis
     }
   } ba;
 
+.. _mint:
+
+mint
+=================
+
+.. code-block:: cpp
+
+  int const mod = 998244353;
+  struct mint {
+    ll v;
+    mint(ll x = 0) { v = x % mod; }
+    mint& f(ll t) { v = t < 0 ? t + mod : t; return *this; }
+    mint operator-() const { return mint() - *this; }
+    mint &operator+=(const mint& rhs) { return f(v + rhs.v - mod); }
+    mint &operator-=(const mint& rhs) { return f(v - rhs.v); }
+    mint &operator*=(const mint& rhs) { v = v * rhs.v % mod; return *this; }
+    mint &operator/=(const mint& rhs) { return *this *= rhs.inv(); }
+    mint operator+(const mint& rhs) const { return mint(*this) += rhs; }
+    mint operator-(const mint& rhs) const { return mint(*this) -= rhs; }
+    mint operator*(const mint& rhs) const { return mint(*this) *= rhs; }
+    mint operator/(const mint& rhs) const { return mint(*this) /= rhs; }
+    friend mint operator+(ll x, const mint& rhs) { return mint(x) + rhs; }
+    friend mint operator-(ll x, const mint& rhs) { return mint(x) - rhs; }
+    friend mint operator*(ll x, const mint& rhs) { return mint(x) * rhs; }
+    friend mint operator/(ll x, const mint& rhs) { return mint(x) / rhs; }
+    bool operator<(const mint& rhs) const{ return v < rhs.v;}
+    bool operator==(const mint& rhs) const{ return v == rhs.v;}
+    bool operator!=(const mint& rhs) const{ return v != rhs.v;}
+    operator bool() const { return v; }
+    operator int() const { return v; }
+    operator ll() const { return v; }
+    mint inv() const { return pow(mod - 2); }
+    mint pow(ll n) const {
+      if (n < 0) return inv().pow(-n);
+      mint r(1), x(*this);
+      while (n) {
+        if (n & 1) r *= x;
+        x *= x;
+        n >>= 1;
+      }
+      return r;
+    }
+    friend ostream& operator<<(ostream&os, const mint&t) { return os << t.v; }
+    friend istream& operator>>(istream&is, mint&t) { ll x; is >> x; t = mint(x); return is; }
+  };
+
 .. _n_i enumerate:
 
 n/i Enumerate
