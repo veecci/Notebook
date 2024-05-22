@@ -264,9 +264,13 @@ ISAP
 
 .. code-block:: cpp
 
+	void addedge(int u, int v, int c, int r = 0) {
+	  e[idx].u = v, e[idx].c = c, e[idx].next = p[u], p[u] = idx++;
+  	  e[idx].u = u, e[idx].c = r, e[idx].next = p[v], p[v] = idx++;
+	}
 	//* bfs in the beginning to accelerate (+5%)
 	int gap[N], lev[N], cur[N], pre[N];
-	int sap(int s, int t) {
+	int sap(int s, int t, int n) {
 	  clr(gap, 0), clr(lev, 0), memcpy(cur, p, sizeof p);
 	  int u, v, ret(0), step(inf), mi;
 	  gap[0] = n, u = pre[s] = s;
