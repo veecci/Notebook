@@ -583,9 +583,9 @@ FWT
 .. code-block:: cpp
 
   ll sum_bit(ll n, int k) {
-    ll ret = (n + 1) / (1LL << (k + 1)) * (1LL << k);
-    ret += max(0LL, (n + 1) % (1LL << (k + 1)) - (1LL << k));
-    return ret;
+    ll x = (n + 1) / (1LL << (k + 1)) * (1LL << k);
+    ll y = (n + 1) % (1LL << (k + 1)) - (1LL << k);
+    return x + max(y, 0LL);
   }
 
 .. _omega_d_table:
