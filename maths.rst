@@ -574,6 +574,20 @@ FWT
     fwt(ta, n, -1);
   }
 
+.. _sum_specific_bit_count:
+
+:math:`\sum_{i=1}^{n}(i\gg k\space\&\space 1)`
+
+======================================================
+
+.. code-block:: cpp
+
+  ll sum_bit(ll n, int k) {
+    ll ret = (n + 1) / (1LL << (k + 1)) * (1LL << k);
+    ret += max(0LL, (n + 1) % (1LL << (k + 1)) - (1LL << k));
+    return ret;
+  }
+
 .. _omega_d_table:
 
 ω(n) and d(n) Table
