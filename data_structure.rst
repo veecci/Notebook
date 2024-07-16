@@ -298,6 +298,29 @@ Matrix
 	  }
 	} ;
 
+.. _cartesian_tree:
+
+CartesianTree
+=============
+
+.. code-block:: cpp
+
+	int const N = 5005000;
+	int a[N];
+	int tr[N][2], st[N], top;
+	void cartesian(int n) {
+	  top = 0; 
+	  Rep(i, n) tr[i][0] = tr[i][1] = 0;
+	  Rep(i, n) {
+	    int t = top;
+	    while (t > 0 && a[st[t]] > a[i]) --t;
+	    if (t) tr[st[t]][1] = i;
+	    if (t < top) tr[i][0] = st[t + 1];
+	    st[++t] = i; 
+	    top = t;
+	  }
+	}
+
 .. _kd_tree:
 
 KDTree
