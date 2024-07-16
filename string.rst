@@ -49,37 +49,37 @@ extKMP
 
 .. code-block:: cpp
 
-	int ext[maxn]; // lcp(pat's suffix, pat)
-	int ex[maxn]; // lcp(pat's suffix, str)
-	//exp. str = "aaaba", pat = "aba", then ex[] = {1, 1, 3, 0, 1}, ext[] = {3, 0, 1}
-	//la = strlen(str), lb = strlen(pat);
+	// str = "aaaba", pat = "aba", then ex[] = {1, 1, 3, 0, 1}, ext[] = {3, 0, 1}
+	int const N = 200200;
+	int ext[N], ex[N]; 
 	void extkmp(char *str, char *pat, int ext[], int ex[]) {
-	    int p=0,k=1;
-	    while(pat[p] == pat[p+1]) p++;
-	    ext[0] = lb, ext[1] = p;
-	    for(int i=2;i<lb;i++){
-	        int x = k + ext[k] - i, y = ext[i - k];
-	        if (y < x) ext[i] = y;
-	        else{
-	            p = max(0, x);
-	            while (pat[p] == pat[p+i]) p++;
-	            ext[i] = p;
-	            k = i;
-	        }
+	  int la = strlen(str), lb = strlen(pat);
+	  int p = 0, k = 1;
+	  while (pat[p] == pat[p + 1]) ++p;
+	  ext[0] = lb, ext[1] = p;
+	  for (int i = 2; i < lb; ++i) {
+	    int x = k + ext[k] - i, y = ext[i - k];
+	    if (y < x) ext[i] = y;
+	    else{
+	      p = max(0, x);
+	      while (pat[p] == pat[p + i]) ++p;
+	      ext[i] = p;
+	      k = i;
 	    }
-	    p = k = 0;
-	    while(str[p] && str[p] == pat[p]) p++;
-	    ex[0] = p;
-	    for(int i=1;i<la;i++){
-	        int x = k + ex[k] - i, y = ext[i - k];
-	        if (y < x) ex[i] = y;
-	        else{
-	            p = max(0, x);
-	            while (pat[p] && pat[p] == str[p+i]) p++;
-	            ex[i] = p;
-	            k = i;
-	        }
+	  }
+	  p = k = 0;
+	  while (str[p] && str[p] == pat[p]) ++p;
+	  ex[0] = p;
+	  for (int i = 1; i < la; ++i) {
+	    int x = k + ex[k] - i, y = ext[i - k];
+	    if (y < x) ex[i] = y;
+	    else{
+	      p = max(0, x);
+	      while (pat[p] && pat[p] == str[p + i]) ++p;
+	      ex[i] = p;
+	      k = i;
 	    }
+	  }
 	}
 
 .. _trie:
