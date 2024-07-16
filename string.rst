@@ -195,47 +195,55 @@ SuffixArray
 
 .. code-block:: cpp
 
-	#define MAXL 100100
-	#define MAXC 256
-	using namespace std;
-	int arr[3][MAXL], cnt[MAXL], mc[MAXC], h[MAXL], *sa, *ta, *r, *tr, sz;
-	void sa_init(char *str, int len){
-	    sa = arr[0], ta = arr[1], r = arr[2], sz = 0;
-	    for(int i=0;i<len;i++) ta[i] = str[i];
-	    sort(ta, ta + len);
-	    for(int i=1;i<=len;i++){
-	        if(ta[i] != ta[i-1] || i == len) cnt[ mc[ ta[i-1] ] = sz++ ] = i;
+	int const N = 200200;
+	int arr[3][N], cnt[N], mc[256], h[N], *sa, *ta, *r, *tr, sz;
+	void sa_init(char *str, int len) {
+	  sa = arr[0], ta = arr[1], r = arr[2], sz = 0;
+	  rep(i, len) ta[i] = str[i];
+	  sort(ta, ta + len);
+	  Rep(i, len) {
+	    if (ta[i] != ta[i - 1] || i == len) {
+	      cnt[mc[ta[i - 1]] = sz++] = i;
 	    }
-	    for(int i=len-1;i>=0;i--) sa[ --cnt[ r[i] = mc[ str[i] ]]] = i;
-	    for(int k=1;k<len && r[sa[len-1]]<len-1;k<<=1){
-	        for(int i=0;i<len;i++) cnt[r[sa[i]]] = i + 1;
-	        for(int i=len-1;i>=0;i--) {
-	            if(sa[i] >= k) ta[ --cnt[ r[sa[i] - k] ] ] = sa[i] - k;
-	        }
-	        for(int i=len-k;i<len;i++) ta[ --cnt[r[i]] ] = i;
-	        tr = sa, sa = ta, tr[sa[0]] = 0;
-	        for(int i=1;i<len;i++) {
-	            tr[sa[i]] = tr[sa[i-1]] +
-	                (r[sa[i]] != r[sa[i-1]] || sa[i-1]+k >= len
-	                    || r[sa[i]+k] != r[sa[i-1]+k]);
-	        }
-	        ta = r, r = tr;
+	  }
+	  for (int i = len - 1; i >= 0; --i) {
+	    sa[--cnt[r[i] = mc[str[i]]]] = i;
+	  }
+	  for (int k = 1; k < len && r[sa[len - 1]] < len - 1; k <<= 1) {
+	    for (int i = 0; i < len; i++) {
+	      cnt[r[sa[i]]] = i + 1;
 	    }
+	    for (int i = len - 1; i >= 0; --i) {
+	      if (sa[i] >= k) {
+	        ta[--cnt[r[sa[i] - k]]] = sa[i] - k;
+	      }
+	    }
+	    for (int i = len - k; i < len; ++i) {
+	      ta[--cnt[r[i]]] = i;
+	    }
+	    tr = sa, sa = ta, tr[sa[0]] = 0;
+	    for (int i = 1; i < len; ++i) {
+	      tr[sa[i]] =
+	        tr[sa[i - 1]] + (r[sa[i]] != r[sa[i - 1]] || sa[i - 1] + k >= len || r[sa[i] + k] != r[sa[i - 1] + k]);
+	    }
+	    ta = r, r = tr;
+	  }
+	
+	  for (int i = 0, d = 0, j; i < len; ++i) {
+	    if (str[i] == '#' || r[i] == len - 1) {
+	      h[r[i]] = d = 0;
+	    } else {
+	      if (d) {
+	        --d;
+	      }
+	      j = sa[r[i] + 1];
+	      while (str[i + d] != '#' && str[j + d] != '#' && str[i + d] == str[j + d]) {
+	        ++d;
+	      }
+	      h[r[i]] = d;
+	    }
+	  }
 	}
-	void h_init(char *str, int len){
-	    for(int i=0,d=0,j;i<len;i++){
-	        if(str[i] == '#' || r[i] == len-1) h[r[i]] = d = 0; //'#' = 35
-	        else{
-	            if(d) d--;
-	            j = sa[r[i] + 1];
-	            while(str[i+d] != '#' && str[j+d] != '#'
-	                  && str[i+d] == str[j+d])
-	                    d++;
-	            h[r[i]] = d;
-	        }
-	    }
-	}
-	char str[MAXL];
 
 .. _aho_corasick:
 
