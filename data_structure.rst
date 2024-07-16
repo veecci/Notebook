@@ -308,7 +308,7 @@ CartesianTree
 	int const N = 5005000;
 	int a[N];
 	int tr[N][2], st[N], top;
-	void cartesian(int n) {
+	int cartesian(int n) {
 	  top = 0; 
 	  Rep(i, n) tr[i][0] = tr[i][1] = 0;
 	  Rep(i, n) {
@@ -319,6 +319,7 @@ CartesianTree
 	    st[++t] = i; 
 	    top = t;
 	  }
+          return st[1];
 	}
 
 .. _kd_tree:
