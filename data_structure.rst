@@ -140,6 +140,34 @@ RMQ
 	  }
 	};
 
+	// intern
+	template<typename T>
+	struct RMQ {
+	  int lg[N];
+	  T d[M][N]; // M = lg[N] + 1
+	  inline T func(T x, T y) {
+	    return max(x, y);
+	  }
+	  void init(int n, T a[]) {
+	    lg[0] = -1;
+	    Rep(i, n) {
+	      lg[i] = lg[i - 1] + !(i & (i - 1));
+	      d[0][i] = a[i];
+	    }
+	    for (int i = 1; (1 << i) <= n; ++i) {
+	      for (int j = 1; j + (1 << i) - 1 <= n; ++j) {
+	        d[i][j] = func(d[i - 1][j], d[i - 1][j + (1 << (i - 1))]);
+	      }
+	    }
+	  }
+	  T get(int a, int b) { // a <= b
+	    int k = lg[b - a + 1];
+	    return func(d[k][a], d[k][b - (1 << k) + 1]);
+	  }
+	};
+	RMQ<ll> rmq;
+
+
 .. _rmq_2d:
 
 RMQ(2D)
