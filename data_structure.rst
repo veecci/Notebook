@@ -47,6 +47,34 @@ DSU(Vector)
 	}
 	void init() { clr(fa, 0xff), clr(v, 0); }
 
+	// intern
+	int fa[N], v[N];
+	int find(int a) {
+	  if (fa[a] < 0) return a;
+	  else {
+	    int t = fa[a];
+	    fa[a] = find(fa[a]);
+	    v[a] += v[t];
+	    return fa[a];
+	  }
+	}
+	void uni(int a, int b, int c = 0) {
+	  if (fa[a] < fa[b]) {
+	    fa[a] += fa[b], fa[b] = a, v[b] += c;
+	  } else {
+	    fa[b] += fa[a], fa[a] = b, v[a] -= c;
+	  }
+	}
+	bool addedge(int a, int b, int c) {
+	  int ra = find(a), rb = find(b);
+	  if (ra == rb) return 0;
+	  uni(ra, rb, v[a] - v[b] + c);
+	  return 1;
+	}
+	void init(int n) { 
+	  Rep(i, n) fa[i] = -1, v[i] = 0;
+	}
+
 .. _fenwick_tree:
 
 FenwickTree
