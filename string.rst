@@ -60,7 +60,7 @@ extKMP
 	  for (int i = 2; i < lb; ++i) {
 	    int x = k + ext[k] - i, y = ext[i - k];
 	    if (y < x) ext[i] = y;
-	    else{
+	    else {
 	      p = max(0, x);
 	      while (pat[p] == pat[p + i]) ++p;
 	      ext[i] = p;
@@ -73,7 +73,7 @@ extKMP
 	  for (int i = 1; i < la; ++i) {
 	    int x = k + ex[k] - i, y = ext[i - k];
 	    if (y < x) ex[i] = y;
-	    else{
+	    else {
 	      p = max(0, x);
 	      while (pat[p] && pat[p] == str[p + i]) ++p;
 	      ex[i] = p;
@@ -152,6 +152,7 @@ Manacher
 	  int id, ret; // maxPalindrome_idx, maxPalindrome_length
 	  void func() {
 	    int mx (0);
+	    id = 0;
 	    rep(i, len) {
 	      if (mx > i) p[i] = min(p[id + id - i], mx - i);
 	      else p[i] = 1;
@@ -164,7 +165,7 @@ Manacher
 	    }
 	    --ret;
 	  }
-	  void cal(char *s) {
+	  void init(char *s) {
 	    // "aaa" -> "!#a#a#a#"
 	    len = 0; str[len++]= '!', str[len++] = '#';
 	    for (int i = 0; s[i]; ++i) {
@@ -174,6 +175,16 @@ Manacher
 	    str[len] = 0;
 	    ret = 0;
 	    func();
+	  }
+	  bool check(int l, int r) {
+	    if ((r - l) % 2 == 0) {
+	      int mid = (r + l) / 2;
+	      mid = mid * 2 + 2;
+	      return p[mid] == r - l + 2;
+	    } else {
+	      int mid = (l + 1 + r + 1);
+	      return p[mid] == r - l + 2;
+	    }
 	  }
 	};
 
