@@ -141,6 +141,8 @@ RMQ
 	};
 
 	// intern
+	int const N = 1000100;
+	int const M = 20;
 	template<typename T>
 	struct RMQ {
 	  int lg[N];
