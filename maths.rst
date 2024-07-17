@@ -471,6 +471,22 @@ Place n Balls into m Boxes
     }
   }
 
+  // intern
+  // S2(n, m) = (1/m!) * Sum_{i=0..k} (-1)^(m-i)*binomial(m, i)*i^n.
+  ll stirling2(int n, int m) {
+    ll sum = 0;
+    Rep(i, m) {
+      ll t = C(m, i) * powMod(i, n, mod) % mod;
+      if ((m - i) & 1) sum -= t;
+      else sum += t;
+      sum %= mod;
+    }
+    mint ret = sum; 
+    ret /= fac[m];
+    return ret;
+  }
+
+
 .. _fft:
 
 FFT
