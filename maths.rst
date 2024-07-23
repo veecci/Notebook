@@ -411,6 +411,37 @@ Combination(mod)
     for (int i = 2; i < N; ++i) inv[i] = inv[i - 1] * inv[i] % mod;
   }
 
+.. _lagrange_interpolation
+
+Lagrange Interpolation
+============================
+
+.. code-block:: cpp
+
+  // intern
+  // a = {f(0), f(1), ... , f(n)}
+  int const N = 10100;
+  ll fac[N], inv[N];
+  ll lagrange(ll a[N], int n, ll x, ll mod) {
+    fac[0] = inv[0] = inv[1] = 1;
+    for (int i = 1; i <= n; ++i) fac[i] = fac[i - 1] * i % mod;
+    for (int i = 2; i <= n; ++i) inv[i] = inv[mod % i] * (mod - mod / i) % mod;
+    for (int i = 2; i <= n; ++i) inv[i] = inv[i - 1] * inv[i] % mod;
+    vector<ll> pre(n + 1), suf(n + 1); 
+    x %= mod; pre[0] = x; Rep(i, n) pre[i] = pre[i - 1] * (x - i) % mod;
+    suf[n] = (x - n) % mod; for (int i = n - 1; i >= 0; --i) suf[i] = suf[i + 1] * (x - i) % mod;
+    ll ret = 0;
+    rep(i, n + 1) {
+      ll di = (i == 0 ? 1LL : pre[i - 1]) * (i == n ? 1LL : suf[i + 1]) % mod;
+      ll t = di * inv[i] % mod * inv[n - i] % mod;
+      if ((n - i) & 1) ret -= t * a[i];
+      else ret += t * a[i]; 
+      ret %= mod;
+    }
+    if (ret < 0) ret += mod;
+    return ret;
+  }
+
 .. _place_n_balls_into_m_boxes:
 
 Place n Balls into m Boxes
