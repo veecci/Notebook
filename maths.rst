@@ -402,6 +402,7 @@ Combination(mod)
 
   ll fac[N], inv[N];
   ll C(int n, int m) {
+    if (n < m) return 0;
     return fac[n] * inv[m] % mod * inv[n - m] % mod;
   }
   void Cinit() {
@@ -409,6 +410,16 @@ Combination(mod)
     for (int i = 1; i < N; ++i) fac[i] = fac[i - 1] * i % mod;
     for (int i = 2; i < N; ++i) inv[i] = inv[mod % i] * (mod - mod / i) % mod;
     for (int i = 2; i < N; ++i) inv[i] = inv[i - 1] * inv[i] % mod;
+  }
+
+.. _lucas
+
+Lucas
+=======
+
+  ll lucas(ll n, ll m) {
+    if (m == 0) return 1;
+    return (C(n % mod, m % mod) * lucas(n / mod, m / mod)) % mod;
   }
 
 .. _lagrange_interpolation
