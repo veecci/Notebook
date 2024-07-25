@@ -417,6 +417,8 @@ Combination(mod)
 Lucas
 =======
 
+.. code-block:: cpp
+
   ll lucas(ll n, ll m) {
     if (m == 0) return 1;
     return (C(n % mod, m % mod) * lucas(n / mod, m / mod)) % mod;
