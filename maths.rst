@@ -115,6 +115,24 @@ Sieve Primes
     }
   }
 
+  //sieve mu
+  int pri[N], mu[N], cnt;
+  bool mark[N];
+  void sieve_mu() {
+    cnt = 0, mu[1] = 1;
+    for (int i = 2; i < N; ++i) {
+      if (!mark[i]) pri[cnt++] = i, mu[i] = -1;
+      for (int j = 0; pri[j] * i < N; ++j) {
+        mark[pri[j] * i] = 1;
+        if (!(i % pri[j])) {
+          mu[pri[j] * i] = 0;
+          break;
+        }
+        mu[pri[j] * i] = -mu[i];
+      }
+    }
+  }
+
 .. _phi:
 
 Phi
