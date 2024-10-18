@@ -311,6 +311,23 @@ Find Factors
     return cnt;
   }
 
+.. _square_free:
+
+SquareFree Prefix Sum
+====================
+
+.. code-block:: cpp
+
+  // Number of (positive) squarefree numbers <= n.
+  ll square_free_prefix_sum(ll n) {
+     ll m = sqrtl(n);
+     ll ret = 0;
+     for (ll d = 1; d <= m; ++d) {
+       ret += mu[d] * (n / (d * d));
+     }
+    return ret;
+  }
+
 .. _basis:
 
 Basis
