@@ -313,7 +313,7 @@ Find Factors
 
 .. _square_free:
 
-Squarefree-Prefix-Sum
+Squarefree
 ====================
 
 .. code-block:: cpp
