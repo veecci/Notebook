@@ -356,6 +356,33 @@ Matrix
 	  }
 	} ;
 
+	//intern
+	struct Matrix {
+	  int n; ll a[N][N];
+	  void init(int _n = 0) { n = _n; clr(a, 0); }
+	  void pr() { rep(i, n) rep(j, n) cout << a[i][j] << (j == n - 1 ? '\n' : ' '); }
+	};
+	
+	void mul(Matrix& r, Matrix const &a, Matrix const &b) {
+	  int n = a.n; r.init(n);
+	  rep(i, n) rep(j, n) if (a.a[i][j]) rep(k, n) {
+	    r.a[i][k] += a.a[i][j] * b.a[j][k];
+	  }
+	}
+	
+	void pow(Matrix& r, Matrix const &a, ll m) {
+	  int n = a.n; static Matrix u = a, v;
+	  r.init(n); rep(i, n) r.a[i][i] = 1;
+	  for (; m; m >>= 1) {
+	    if (m & 1) {
+	      mul(v, r, u);
+	      r = v;
+	    }
+	    mul(v, u, u);
+	    u = v;
+	  }
+	}
+
 .. _cartesian_tree:
 
 CartesianTree
