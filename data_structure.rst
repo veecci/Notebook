@@ -371,7 +371,9 @@ Matrix
 	}
 	
 	void pow(Matrix& r, Matrix const &a, ll m) {
-	  int n = a.n; static Matrix u = a, v;
+	  int n = a.n; 
+	  static Matrix u, v; 
+	  u.n = n; rep(i, n) rep(j, n) u.a[i][j] = a.a[i][j];
 	  r.init(n); rep(i, n) r.a[i][i] = 1;
 	  for (; m; m >>= 1) {
 	    if (m & 1) {
