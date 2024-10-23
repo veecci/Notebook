@@ -357,6 +357,8 @@ Matrix
 	} ;
 
 	//intern
+	//Sum matrix: (A, I)
+        //            (0, I)
 	struct Matrix {
 	  int n; ll a[N][N];
 	  void init(int _n = 0) { n = _n; clr(a, 0); }
