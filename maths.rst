@@ -327,6 +327,18 @@ Squarefree
     return ret;
   }
 
+Find kth decimal digit for n / m
+================================
+
+.. code-block:: cpp
+
+  // find kth decimal dight for n / m
+  int f(ll n, ll m, ll k) {
+    n %= m; if (n == 0) return 0;
+    n = mulMod(n, powMod(10, k - 1, m), m);
+    return n * 10 / m;
+  }
+
 .. _basis:
 
 Basis
